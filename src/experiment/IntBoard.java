@@ -80,10 +80,4 @@ public class IntBoard {
 		return board[i][j];
 	}
 	
-	public static void main(String[] args) {
-        IntBoard board = new IntBoard();
-        BoardCell testCell = board.getCell(23, 2);
-        BoardCell testCell2 = board.getCell(0, 1);
-        Set<BoardCell> testList =  board.getAdjList(testCell);
-    }
 }
