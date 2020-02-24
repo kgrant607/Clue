@@ -9,7 +9,7 @@ import java.util.Set;
 public class IntBoard {
 	BoardCell[][] board;
 	Map<BoardCell, HashSet<BoardCell>> adjacencies;
-	ArrayList<BoardCell> targets;
+	Set<BoardCell> targets;
 	ArrayList<BoardCell> visited;
 	public IntBoard(){
 		adjacencies = new HashMap<BoardCell,HashSet<BoardCell>>();
@@ -49,9 +49,9 @@ public class IntBoard {
 		return adjacencies.get(b);
 	}
 	
-	private void calcTargets(BoardCell startCell, int pathLength) {
+	public void calcTargets(BoardCell startCell, int pathLength) {
 		visited = new ArrayList<BoardCell>();
-		targets = new ArrayList<BoardCell>();
+		targets = new HashSet<BoardCell>();
 		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
 	}
@@ -72,7 +72,7 @@ public class IntBoard {
 		
 	}
 
-	public ArrayList<BoardCell> getTargets(){
+	public Set<BoardCell> getTargets(){
 		return targets;
 	}
 
