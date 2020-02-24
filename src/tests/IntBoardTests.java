@@ -79,4 +79,11 @@ class IntBoardTests {
 		assertEquals(4,testList.size());
 	}
 	
+	/*
+	@Test
+	public void testCalcTarget5Steps() {
+		BoardCell testCell = board.getCell(0, 0);
+	}
+	*/
+	
 }

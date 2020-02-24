@@ -1,5 +1,6 @@
 package experiment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,16 +9,16 @@ import java.util.Set;
 public class IntBoard {
 	BoardCell[][] board;
 	Map<BoardCell, HashSet<BoardCell>> adjacencies;
-	HashSet<BoardCell> targets;
+	ArrayList<BoardCell> targets;
+	ArrayList<BoardCell> visited;
 	public IntBoard(){
-		targets = new HashSet<BoardCell>();
 		adjacencies = new HashMap<BoardCell,HashSet<BoardCell>>();
 		board = new BoardCell[24][24];
 		for(int i=0;i<24;i++) {
 			for(int j=0;j<24;j++) {
 				BoardCell temp = new BoardCell();
-				temp.column=i;
-				temp.row=j;
+				temp.column=j;
+				temp.row=i;
 				board[i][j]=temp;
 			}
 		}
@@ -29,28 +30,16 @@ public class IntBoard {
 			for(int j =0; j<board[i].length;j++) {
 				HashSet<BoardCell> temp = new HashSet<BoardCell>();
 				if(board[i][j].row-1>=0) {
-					BoardCell add = new BoardCell();
-					add.row=board[i][j].row-1;
-					add.column=board[i][j].column;
-					temp.add(add);
+					temp.add(board[i-1][j]);
 				}
 				if(board[i][j].row+1<=23) {
-					BoardCell add = new BoardCell();
-					add.row=board[i][j].row+1;
-					add.column=board[i][j].column;
-					temp.add(add);
+					temp.add(board[i+1][j]);
 				}
 				if(board[i][j].column-1>=0) {
-					BoardCell add = new BoardCell();
-					add.row=board[i][j].row;
-					add.column=board[i][j].column-1;
-					temp.add(add);
+					temp.add(board[i][j-1]);
 				}
 				if(board[i][j].column+1<=23) {
-					BoardCell add = new BoardCell();
-					add.row=board[i][j].row;
-					add.column=board[i][j].column+1;
-					temp.add(add);
+					temp.add(board[i][j+1]);
 				}
 				adjacencies.put(board[i][j], temp);
 			}
@@ -61,10 +50,29 @@ public class IntBoard {
 	}
 	
 	private void calcTargets(BoardCell startCell, int pathLength) {
-		
+		visited = new ArrayList<BoardCell>();
+		targets = new ArrayList<BoardCell>();
+		visited.add(startCell);
+		findAllTargets(startCell, pathLength);
 	}
 	
-	public Set<BoardCell> getTargets(){
+	private void findAllTargets(BoardCell thisCell,int numSteps) {
+		for(BoardCell temp: adjacencies.get(thisCell)) {
+			if(!visited.contains(temp)) {
+				visited.add(temp);
+				if(numSteps==1) {
+					targets.add(temp);
+				}
+				else {
+					findAllTargets(temp,numSteps-1);
+				}
+				visited.remove(temp);
+			}
+		}
+		
+	}
+
+	public ArrayList<BoardCell> getTargets(){
 		return targets;
 	}
 
@@ -74,7 +82,8 @@ public class IntBoard {
 	
 	public static void main(String[] args) {
         IntBoard board = new IntBoard();
-        BoardCell testCell = board.getCell(0, 0);
+        BoardCell testCell = board.getCell(23, 2);
         BoardCell testCell2 = board.getCell(0, 1);
+        Set<BoardCell> testList =  board.getAdjList(testCell);
     }
 }
