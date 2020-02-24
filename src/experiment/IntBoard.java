@@ -75,5 +75,6 @@ public class IntBoard {
 	public static void main(String[] args) {
         IntBoard board = new IntBoard();
         BoardCell testCell = board.getCell(0, 0);
+        BoardCell testCell2 = board.getCell(0, 1);
     }
 }

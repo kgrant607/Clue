@@ -24,7 +24,7 @@ class IntBoardTests {
 		BoardCell testCell = board.getCell(0,0);
 		Set<BoardCell> testList =  board.getAdjList(testCell);
 		assertTrue(testList.contains(board.getCell(1,0)));
-		assertTrue(testList.contains(board.getCell(0, 1)));
+		assertTrue(testList.contains(board.getCell(0,1)));
 		assertEquals(2,testList.size());
 	}
 	
@@ -33,7 +33,7 @@ class IntBoardTests {
 		BoardCell testCell = board.getCell(23, 23);
 		Set<BoardCell> testList =  board.getAdjList(testCell);
 		assertTrue(testList.contains(board.getCell(22,23)));
-		assertTrue(testList.contains(board.getCell(23, 22)));
+		assertTrue(testList.contains(board.getCell(23,22)));
 		assertEquals(2,testList.size());
 	}
 	
