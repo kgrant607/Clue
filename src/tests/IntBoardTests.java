@@ -1,19 +1,19 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.*;
 
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
+
 
 import experiment.BoardCell;
 import experiment.IntBoard;
 
-class IntBoardTests {
+public class IntBoardTests {
 	IntBoard board = new IntBoard();
-	@BeforeEach
+	@Before
     public void beforeAll() {
 		board = new IntBoard();
     }
