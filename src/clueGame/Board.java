@@ -1,8 +1,12 @@
 package clueGame;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
+import java.io.*;
 
 public class Board {
 	private int numRows;
@@ -15,22 +19,14 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	public static Board getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Board();
 	}
 
 	public void setConfigFiles(String string, String string2) {
-		// TODO Auto-generated method stub
-		
+		boardConfigFile = string;
+		roomConfigFile = string2;	
 	}
 	
-	public void loadRoomConfig() {
-		
-	}
-	
-	public void loadBoardConfig() {
-		
-	}
 	private void calcAdjacencies() {
 		for(int i=0;i<board.length;i++){
 			for(int j =0; j<board[i].length;j++) {
@@ -52,27 +48,130 @@ public class Board {
 		}
 	}
 	public void initialize() {
-		// TODO Auto-generated method stub
+
+		try {
+			loadBoardConfig();
+			loadRoomConfig();
+		} catch (BadConfigFormatException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 
+	public Map<String, String> getLegendString(){
+		return legend;
+	}
 	public Map<Character, String> getLegend() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Character, String> g = new HashMap<>();
+		for (Map.Entry<String, String> entry : legend.entrySet()) {
+			g.put(entry.getKey().charAt(0), entry.getValue());
+		}
+		return g;
 	}
 
 	public int getNumRows() {
-		// TODO Auto-generated method stub
-		return 0;
+		int i = 0;
+		while(i < MAX_BOARD_SIZE & board[i][0]!=null) {
+			i++;
+		}
+		return i;
 	}
 
 	public int getNumColumns() {
-		// TODO Auto-generated method stub
-		return 0;
+		int i = 0;
+		while(i < MAX_BOARD_SIZE & board[0][i]!=null) {
+			i++;
+		}
+		return i;
 	}
 
 	public BoardCell getCellAt(int i, int j) {
-		// TODO Auto-generated method stub
+		return board[i][j];
+	}
+
+	public void loadRoomConfig() throws BadConfigFormatException{
+		legend = new HashMap<>();
+		File legendFile = new File(roomConfigFile);
+		try (Scanner sc = new Scanner(legendFile)){
+			while(sc.hasNextLine()) {
+				String raw = sc.nextLine();
+				legend.put(raw.split(", ")[0], raw.split(", ")[1]);
+				if(raw.split(", ")[2] == "Card" || raw.split(", ")[2] == "Other") {
+					throw new BadConfigFormatException();
+				}
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Legend file could not be opened");
+			e.printStackTrace();
+		}
+	}
+
+	public void loadBoardConfig() throws BadConfigFormatException{
+		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		FileReader boardFile = null;
+		try {
+			boardFile = new FileReader(boardConfigFile);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try (BufferedReader br = new BufferedReader(boardFile)){
+			String line;
+			int i = 0;
+			while ((line = br.readLine()) != null) {
+				String[] values = line.split(",");
+				for(int j = 0; j < values.length; j++) {
+					if(!Character.isDigit(values[j].charAt(0))) {
+						BoardCell b = new BoardCell(i,j);
+						b.initial = values[j];
+						board[i][j] =  b;
+					}
+				}
+				i++;
+			}
+			br.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public Set<BoardCell> getAdjList(int i, int j) {
+		HashSet<BoardCell> s = new HashSet<BoardCell>();
+		//check left
+		if(i - 1 > 0) {
+			if(board[i-1][j].isWalkway() || (board[i-1][j].isDoorway() && board[i-1][j].getInitialString().charAt(2)=='R')) {
+				s.add(board[i-1][j]);
+			}
+		}
+		//check right
+		if(i + 1 < this.getNumColumns()) {
+			if(board[i+1][j].isWalkway() || (board[i+1][j].isDoorway() && board[i+1][j].getInitialString().charAt(2)=='L')) {
+				s.add(board[i+1][j]);
+			}
+		}
+		//check up
+		if(j - 1 > 0) {
+			if(board[i][j-1].isWalkway() || (board[i][j-1].isDoorway() && board[i][j-1].getInitialString().charAt(2)=='D')) {
+				s.add(board[i][j-1]);
+			}
+		}
+		//check down
+		if(j + 1 < this.getNumRows()) {
+			if(board[i][j+1].isWalkway() || (board[i][j+1].isDoorway() && board[i][j+1].getInitialString().charAt(2)=='U')) {
+				s.add(board[i][j+1]);
+			}
+		}
+		return s;
+	}
+
+	public void calcTargets(int i, int j, int k) {
+		
+	}
+
+	public Set<BoardCell> getTargets() {
 		return null;
 	}
 
