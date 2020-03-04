@@ -21,14 +21,14 @@ public class BoardCell {
 		return false;
 	}
 	public boolean isRoom() {
-		if(this.initial != "W" && this.initial != "X") {
+		if(this.initial.charAt(0) != 'W' && this.initial.charAt(0) != 'X') {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean isWalkway() {
-		if(this.initial == "W") {
+		if(initial.charAt(0) == 'W') {
 			return true;
 		}
 		return false;
@@ -65,6 +65,13 @@ public class BoardCell {
 	}
 	public char getInitial() {
 		return initial.charAt(0);
+	}
+	public char getDir() {
+		if(initial.length()>2) {
+			return initial.charAt(2);
+		}else {
+			return initial.charAt(1);
+		}
 	}
 	public int getRow() {
 		return row;

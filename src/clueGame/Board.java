@@ -140,28 +140,46 @@ public class Board {
 
 	public Set<BoardCell> getAdjList(int i, int j) {
 		HashSet<BoardCell> s = new HashSet<BoardCell>();
-		//check left
-		if(i - 1 > 0) {
-			if(board[i-1][j].isWalkway() || (board[i-1][j].isDoorway() && board[i-1][j].getInitialString().charAt(2)=='R')) {
-				s.add(board[i-1][j]);
+		if(board[i][j].isWalkway()) {
+			//check left
+			if(j - 1 >= 0) {
+				if(board[i][j-1].isWalkway() || (board[i][j-1].isDoorway() && board[i][j-1].getDir()=='R')) {
+					s.add(board[i][j-1]);
+				}
 			}
-		}
-		//check right
-		if(i + 1 < this.getNumColumns()) {
-			if(board[i+1][j].isWalkway() || (board[i+1][j].isDoorway() && board[i+1][j].getInitialString().charAt(2)=='L')) {
-				s.add(board[i+1][j]);
+			//check right
+			if(j + 1 < this.getNumColumns()) {
+				if(board[i][j+1].isWalkway() || (board[i][j+1].isDoorway() && board[i][j+1].getDir()=='L')) {
+					s.add(board[i][j+1]);
+				}
 			}
-		}
-		//check up
-		if(j - 1 > 0) {
-			if(board[i][j-1].isWalkway() || (board[i][j-1].isDoorway() && board[i][j-1].getInitialString().charAt(2)=='D')) {
-				s.add(board[i][j-1]);
+			//check up
+			if(i - 1 >= 0) {
+				if(board[i-1][j].isWalkway() || (board[i-1][j].isDoorway() && board[i-1][j].getDir()=='D')) {
+					s.add(board[i-1][j]);
+				}
 			}
-		}
-		//check down
-		if(j + 1 < this.getNumRows()) {
-			if(board[i][j+1].isWalkway() || (board[i][j+1].isDoorway() && board[i][j+1].getInitialString().charAt(2)=='U')) {
-				s.add(board[i][j+1]);
+			//check down
+			if(i + 1 < this.getNumRows()) {
+				if(board[i+1][j].isWalkway() || (board[i+1][j].isDoorway() && board[i+1][j].getDir()=='U')) {
+					s.add(board[i+1][j]);
+				}
+			}
+		}else {
+			if(board[i][j].isDoorway()) {
+				char dir = board[i][j].getDir();
+				if(dir == 'R') {
+					s.add(board[i][j+1]);
+				}
+				if(dir == 'L') {
+					s.add(board[i][j-1]);
+				}
+				if(dir == 'U') {
+					s.add(board[i-1][j]);
+				}
+				if(dir == 'D') {
+					s.add(board[i+1][j]);
+				}
 			}
 		}
 		return s;
