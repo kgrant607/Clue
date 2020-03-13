@@ -18,6 +18,7 @@ public class Board {
 	private Set<BoardCell> targets;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private HashSet<BoardCell> adjacenciesSet;
 	public static Board getInstance() {
 		return new Board();
 	}
@@ -30,20 +31,20 @@ public class Board {
 	private void calcAdjacencies() {
 		for(int i=0;i<board.length;i++){
 			for(int j =0; j<board[i].length;j++) {
-				HashSet<BoardCell> temp = new HashSet<BoardCell>();
+				adjacenciesSet = new HashSet<BoardCell>
 				if(board[i][j].getRow()-1>=0) {
-					temp.add(board[i-1][j]);
+					adjacenciesSet.add(board[i-1][j]);
 				}
 				if(board[i][j].getRow()+1<=23) {
-					temp.add(board[i+1][j]);
+					adjacenciesSet.add(board[i+1][j]);
 				}
 				if(board[i][j].getColumn()-1>=0) {
-					temp.add(board[i][j-1]);
+					adjacenciesSet.add(board[i][j-1]);
 				}
 				if(board[i][j].getColumn()+1<=23) {
-					temp.add(board[i][j+1]);
+					adjacenciesSet.add(board[i][j+1]);
 				}
-				adjMatrix.put(board[i][j], temp);
+				adjMatrix.put(board[i][j], adjacenciesSet);
 			}
 		}
 	}
