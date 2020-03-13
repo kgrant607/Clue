@@ -187,9 +187,6 @@ public class Board {
 		return s;
 	}
 
-	public void calcTargets(int i, int j, int k) {
-		
-	}
 
 	public Set<BoardCell> getTargets() {
 		return null;
