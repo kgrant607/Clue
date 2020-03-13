@@ -30,22 +30,22 @@ public class Board {
 	}
 	
 	private void calcAdjacencies() {
-		for(int i=0;i<board.length;i++){
-			for(int j =0; j<board[i].length;j++) {
+		for(int row=0;row<board.length;row++){
+			for(int column =0; column<board[row].length;column++) {
 				adjacenciesSet = new HashSet<BoardCell>();
-				if(board[i][j].getRow()-1>=0) {
-					adjacenciesSet.add(board[i-1][j]);
+				if(board[row][column].getRow()-1>=0) {
+					adjacenciesSet.add(board[row-1][column]);
 				}
-				if(board[i][j].getRow()+1<=23) {
-					adjacenciesSet.add(board[i+1][j]);
+				if(board[row][column].getRow()+1<=23) {
+					adjacenciesSet.add(board[row+1][column]);
 				}
-				if(board[i][j].getColumn()-1>=0) {
-					adjacenciesSet.add(board[i][j-1]);
+				if(board[row][column].getColumn()-1>=0) {
+					adjacenciesSet.add(board[row][column-1]);
 				}
-				if(board[i][j].getColumn()+1<=23) {
-					adjacenciesSet.add(board[i][j+1]);
+				if(board[row][column].getColumn()+1<=23) {
+					adjacenciesSet.add(board[row][column+1]);
 				}
-				adjMatrix.put(board[i][j], adjacenciesSet);
+				adjMatrix.put(board[row][column], adjacenciesSet);
 			}
 		}
 	}
