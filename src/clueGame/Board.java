@@ -19,6 +19,7 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private HashSet<BoardCell> adjacenciesSet;
+	private Map<Character, String> legendMap;
 	public static Board getInstance() {
 		return new Board();
 	}
@@ -31,7 +32,7 @@ public class Board {
 	private void calcAdjacencies() {
 		for(int i=0;i<board.length;i++){
 			for(int j =0; j<board[i].length;j++) {
-				adjacenciesSet = new HashSet<BoardCell>
+				adjacenciesSet = new HashSet<BoardCell>();
 				if(board[i][j].getRow()-1>=0) {
 					adjacenciesSet.add(board[i-1][j]);
 				}
@@ -64,11 +65,11 @@ public class Board {
 		return legend;
 	}
 	public Map<Character, String> getLegend() {
-		Map<Character, String> g = new HashMap<>();
+		legendMap = new HashMap<>();
 		for (Map.Entry<String, String> entry : legend.entrySet()) {
-			g.put(entry.getKey().charAt(0), entry.getValue());
+			legendMap.put(entry.getKey().charAt(0), entry.getValue());
 		}
-		return g;
+		return legendMap;
 	}
 
 	public int getNumRows() {
