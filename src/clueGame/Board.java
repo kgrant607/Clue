@@ -140,47 +140,47 @@ public class Board {
 		
 	}
 
-	public Set<BoardCell> getAdjList(int row, int j) {
+	public Set<BoardCell> getAdjList(int row, int column) {
 		HashSet<BoardCell> s = new HashSet<BoardCell>();
-		if(board[row][j].isWalkway()) {
+		if(board[row][column].isWalkway()) {
 			//check left
-			if(j - 1 >= 0) {
-				if(board[row][j-1].isWalkway() || (board[row][j-1].isDoorway() && board[row][j-1].getDir()=='R')) {
-					s.add(board[row][j-1]);
+			if(column - 1 >= 0) {
+				if(board[row][column-1].isWalkway() || (board[row][column-1].isDoorway() && board[row][column-1].getDir()=='R')) {
+					s.add(board[row][column-1]);
 				}
 			}
 			//check right
-			if(j + 1 < this.getNumColumns()) {
-				if(board[row][j+1].isWalkway() || (board[row][j+1].isDoorway() && board[row][j+1].getDir()=='L')) {
-					s.add(board[row][j+1]);
+			if(column + 1 < this.getNumColumns()) {
+				if(board[row][column+1].isWalkway() || (board[row][column+1].isDoorway() && board[row][column+1].getDir()=='L')) {
+					s.add(board[row][column+1]);
 				}
 			}
 			//check up
 			if(row - 1 >= 0) {
-				if(board[row-1][j].isWalkway() || (board[row-1][j].isDoorway() && board[row-1][j].getDir()=='D')) {
-					s.add(board[row-1][j]);
+				if(board[row-1][column].isWalkway() || (board[row-1][column].isDoorway() && board[row-1][column].getDir()=='D')) {
+					s.add(board[row-1][column]);
 				}
 			}
 			//check down
 			if(row + 1 < this.getNumRows()) {
-				if(board[row+1][j].isWalkway() || (board[row+1][j].isDoorway() && board[row+1][j].getDir()=='U')) {
-					s.add(board[row+1][j]);
+				if(board[row+1][column].isWalkway() || (board[row+1][column].isDoorway() && board[row+1][column].getDir()=='U')) {
+					s.add(board[row+1][column]);
 				}
 			}
 		}else {
-			if(board[row][j].isDoorway()) {
-				char dir = board[row][j].getDir();
+			if(board[row][column].isDoorway()) {
+				char dir = board[row][column].getDir();
 				if(dir == 'R') {
-					s.add(board[row][j+1]);
+					s.add(board[row][column+1]);
 				}
 				if(dir == 'L') {
-					s.add(board[row][j-1]);
+					s.add(board[row][column-1]);
 				}
 				if(dir == 'U') {
-					s.add(board[row-1][j]);
+					s.add(board[row-1][column]);
 				}
 				if(dir == 'D') {
-					s.add(board[row+1][j]);
+					s.add(board[row+1][column]);
 				}
 			}
 		}
