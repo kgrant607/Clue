@@ -116,7 +116,6 @@ public class Board {
 		try {
 			boardFile = new FileReader(boardConfigFile);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try (BufferedReader br = new BufferedReader(boardFile)){
