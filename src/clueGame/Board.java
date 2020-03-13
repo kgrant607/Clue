@@ -24,9 +24,9 @@ public class Board {
 		return new Board();
 	}
 
-	public void setConfigFiles(String string, String string2) {
-		boardConfigFile = string;
-		roomConfigFile = string2;	
+	public void setConfigFiles(String boardFile, String roomFile) {
+		boardConfigFile = boardFile;
+		roomConfigFile = roomFile;	
 	}
 	
 	private void calcAdjacencies() {
